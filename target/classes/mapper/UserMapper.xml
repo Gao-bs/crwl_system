@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.system.mapper.UserMapper" >
+  <resultMap id="BaseResultMap" type="com.system.entity.pojo.User" >
+    <!--
+      WARNING - @mbggenerated
+    -->
+    <id column="user_id" property="userId" jdbcType="VARCHAR" />
+    <result column="user_name" property="userName" jdbcType="VARCHAR" />
+    <result column="user_password" property="userPassword" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="telephone" property="telephone" jdbcType="VARCHAR" />
+    <result column="email" property="email" jdbcType="VARCHAR" />
+      <result column="sex" property="sex" jdbcType="VARCHAR" />
+        <result column="account" property="account" jdbcType="VARCHAR" />
+                <result column="user_type" property="userType" jdbcType="VARCHAR" />
+        <result column="birthday" property="birthday" jdbcType="TIMESTAMP" />
+  </resultMap>
+  
+  
+    <select id="selectBySelective" resultMap="BaseResultMap"  parameterType="com.system.entity.pojo.User" >
+    select p.* from t_user p
+    <where>
+    <if test="userName!=null and userName!=''">
+     and p.user_name  like CONCAT(CONCAT('%',#{userName}),'%')
+    </if>
+   <if test="account!=null and account!=''">
+     and p.account  like CONCAT(CONCAT('%',#{account}),'%')
+    </if>
+    </where>
+    order  by create_time desc
+  </select>
+  
+    <select id="selecUser" parameterType="com.system.entity.pojo.User" resultMap="BaseResultMap">
+       select cu.* from t_user cu where cu.account=#{account} and cu.user_password=#{userPassword} 
+     </select>
+     
+     
+      <select id="selecUserByUserName" parameterType="com.system.entity.pojo.User" resultMap="BaseResultMap">
+  
+   select * from t_user where account=#{account}  
+  
+  </select>
+  
+  
+</mapper>

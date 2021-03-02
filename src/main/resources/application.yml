@@ -1,0 +1,56 @@
+server:
+  port: 8382
+spring:
+  application:
+    name: crwl
+  jackson:
+    date-format: com.fasterxml.jackson.databind.util.ISO8601DateFormat
+  datasource:
+    name: crwl
+    url: jdbc:mysql://127.0.0.1:3306/java_tieba?useUnicode=true&characterEncoding=UTF-8&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC&useSSL=false
+    username: root
+    password: root
+    # 使用druid数据源
+    type: com.alibaba.druid.pool.DruidDataSource
+    driver-class-name: com.mysql.jdbc.Driver
+    filters: stat
+    maxActive: 20
+    initialSize: 1
+    maxWait: 60000
+    minIdle: 1
+    timeBetweenEvictionRunsMillis: 60000
+    minEvictableIdleTimeMillis: 300000
+    validationQuery: select 'x'
+    testWhileIdle: true
+    testOnBorrow: falsen
+    testOnReturn: false
+    poolPreparedStatements: true
+    maxOpenPreparedStatements: 20
+
+
+
+    
+logging:
+  config: classpath:logback-spring.xml
+
+mybatis:
+  type-aliases-package: com.system.entity
+  mapper-locations: classpath:mapper/*.xml
+
+mapper:
+    #mappers 多个接口时逗号隔开
+    mappers: com.system.util.MyMapper
+    not-empty: false
+   # identity: SELECT UUID(),
+    
+
+pagehelper:
+  helperDialect: mysql
+  reasonable: true
+  rowBoundsWithCount: true
+  supportMethodsArguments: true
+  offsetAsPageNum: true
+  params: pageNum=pageNum;pageSize=pageSize
+  
+spring.mvc.view.prefix: /WEB-INF/page/
+spring.mvc.view.suffix: .jsp

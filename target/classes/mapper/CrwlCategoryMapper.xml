@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.system.mapper.CrwlCategoryMapper" >
+  <resultMap id="BaseResultMap" type="com.system.entity.pojo.CrwlCategory" >
+    <!--
+      WARNING - @mbggenerated
+    -->
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="category_name" property="categoryName" jdbcType="VARCHAR" />
+    <result column="category_url" property="categoryUrl" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  
+    <select id="selectBySelective" resultMap="BaseResultMap"  parameterType="com.system.entity.pojo.CrwlCategory" >
+    select p.* from t_category p
+    <where>
+    <if test="categoryName!=null and categoryName!=''">
+     and p.category_name  like CONCAT(CONCAT('%',#{categoryName}),'%')
+    </if>
+  
+    </where>
+    order  by create_time desc
+  </select>
+</mapper>
